@@ -5,10 +5,16 @@ import AddEdit from './pages/AddEdit';
 import View from './pages/View';
 import About from './pages/About';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Header from './components/Header';
+
 function App() {
   return (
     <>
       <Router>
+        <Header/>
+        <ToastContainer position='top-center'/>
         <Routes>
           <Route path='/' element={<Home/>} />
           <Route path='/add' element={<AddEdit/>} />
