@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import './addEdit.css'
 import app from '../firebase'
 import {toast} from 'react-toastify'
-import database from '../firebase'
+import fireDb from '../firebase'
 
 const initialState = {
     name: '', 
@@ -32,7 +32,7 @@ export default function AddEdit() {
     if(!name || !email || !contact) {
       toast.error("Please provide value in each input field")
     } else {
-      database.child("contacts").push(state, (err) => {
+      fireDb.child("contacts").push(state, (err) => {
         if(err) {
           toast.error(err); 
         } else {
