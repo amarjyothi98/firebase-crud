@@ -5,6 +5,17 @@ import './header.css'
 export default function Header() {
 
     const [activeTab, setActiveTab] = useState("Home"); 
+    const location = useLocation(); 
+
+    useEffect(() => {
+        if(location.pathname === '/') {
+            setActiveTab('Home');
+        } else if (location.pathname === '/about') {
+            setActiveTab("About"); 
+        } else if (location.pathname === '/add') {
+            setActiveTab("AddContact"); 
+        }
+    }, [location])
 
   return (
     <div className='header'>
