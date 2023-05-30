@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './addEdit.css'
-import app from '../firebase'
+import app, { db } from '../firebase'
 import {toast} from 'react-toastify'
-import fireDb from '../firebase'
 
-const initialState = {
-    name: '', 
-    email: '', 
-    contact: ''
-}
+// const initialState = {
+//     name: '', 
+//     email: '', 
+//     contact: ''
+// }
 
 export default function AddEdit() {
 
-  const [state, setState] = useState(initialState); 
+  // const [state, setState] = useState(initialState); 
   const [data, setData] = useState({}); 
 
-  const { name, email, contact } = state; 
+  const [name, setName] = useState(''); 
+  const [email, setEmail] = useState(""); 
+  const [contact, setContact] = useState(""); 
+
+
+  // const { name, email, contact } = state; 
 
   const navigate = useNavigate(); 
 
-  const handleInputChange = (e) => {
-    const {name, value} = e.target; 
-    setState({...state, [name]: value})
-  }
+  // const handleInputChange = (e) => {
+  //   const {name, value} = e.target; 
+  //   setState({...state, [name]: value})
+  // }
 
   // console.log(state)
 
@@ -31,16 +35,15 @@ export default function AddEdit() {
     e.preventDefault(); 
     if(!name || !email || !contact) {
       toast.error("Please provide value in each input field")
-    } else {
-      fireDb.child("contacts").push(state, (err) => {
-        if(err) {
-          toast.error(err); 
-        } else {
-          toast.success("Contact Added Successfully")
-        }
-      });
-      setTimeout(() => navigate("/"), 500); 
+      return; 
+    } 
+    const newUser = { 
+      name, 
+      email, 
+      contact
     }
+    console.log(newUser); 
+    // setTimeout(() => navigate("/"), 500); 
   }
 
   return (
@@ -61,7 +64,7 @@ export default function AddEdit() {
           name='name'
           placeholder='Your Name...'
           value={name}
-          onChange={handleInputChange} />
+          onChange={ (e) => setName(e.target.value)} />
 
         <label htmlFor='name'>Email</label>
         <input 
@@ -70,7 +73,7 @@ export default function AddEdit() {
           name='email'
           placeholder='Your Email...'
           value={email}
-          onChange={handleInputChange} />
+          onChange={(e) => setEmail(e.target.value)} />
 
         <label htmlFor='contact'>Contact</label>
         <input 
@@ -79,7 +82,7 @@ export default function AddEdit() {
           name='contact'
           placeholder='Your Contact...'
           value={contact}
-          onChange={handleInputChange} />
+          onChange={(e) => setContact(e.target.value)} />
 
           <input type="submit" value='save' />
 
