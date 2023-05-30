@@ -8,8 +8,8 @@ export default function Home() {
   const [data, setData] = useState({});
 
   useEffect(() => {
-      fireDb.child('contacts').on('value', (snapshot) => {
-        if(snapshot.val()!==null) {
+      fireDb.child("contacts").on("value", (snapshot) => {
+        if(snapshot.val() !== null) {
           setData({ ...snapshot.val() })
         } else {
           setData({}); 
@@ -38,13 +38,14 @@ export default function Home() {
           <tbody>
             {Object.keys(data).map((id, index) => {
               <tr key={id}>
-                <th scope='row'>{index + 1}</th>
-                <td>{ data[id].name }</td>
-                <td>{ data[id].email }</td>
-                <td>{ data[id].contact }</td>
+                <th scope='row'>{'index + 1'}</th>
+                <td>{ 'data[id].name' }</td>
+                <td>{ 'data[id].email' }</td>
+                <td>{ 'data[id].contact' }</td>
               </tr>
             })}
           </tbody>
+          
         </table>
     </div>
   )
