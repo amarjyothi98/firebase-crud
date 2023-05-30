@@ -8,13 +8,13 @@ export default function Home() {
   const [data, setData] = useState({});
 
   useEffect(() => {
-      db.child("contacts").on("value", (snapshot) => {
-        if(snapshot.val() !== null) {
-          setData({ ...snapshot.val() })
-        } else {
-          setData({}); 
-        }
-      })
+      // db.child("contacts").on("value", (snapshot) => {
+      //   if(snapshot.val() !== null) {
+      //     setData({ ...snapshot.val() })
+      //   } else {
+      //     setData({}); 
+      //   }
+      // })
 
       return () => {
         setData({});

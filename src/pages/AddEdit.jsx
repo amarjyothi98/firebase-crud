@@ -4,6 +4,8 @@ import './addEdit.css'
 import app, { db } from '../firebase'
 import {toast} from 'react-toastify'
 
+import UsersDataServices from '../services/users.services'
+
 // const initialState = {
 //     name: '', 
 //     email: '', 
@@ -31,7 +33,7 @@ export default function AddEdit() {
 
   // console.log(state)
 
-  const handleSubmit = (e) => { 
+  const handleSubmit = async (e) => { 
     e.preventDefault(); 
     if(!name || !email || !contact) {
       toast.error("Please provide value in each input field")
@@ -43,7 +45,21 @@ export default function AddEdit() {
       contact
     }
     console.log(newUser); 
-    // setTimeout(() => navigate("/"), 500); 
+
+    try {
+      await UsersDataServices.addUsers(newUser); 
+      toast.success("User added successfully"); 
+
+      // setTimeout(() => navigate("/"), 500); 
+    } catch (err) {
+      const msg = err.message; 
+      console.log(msg)
+      toast.error(msg); 
+    }
+
+    setName(""); 
+    setContact(""); 
+    setEmail("");
   }
 
   return (
