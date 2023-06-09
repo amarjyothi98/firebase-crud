@@ -30,7 +30,7 @@ export default function Home({ getUserId }) {
   return (
     <div style={{ marginTop: '100px'}}>
       <pre>{ JSON.stringify(users, undefined, 2)}</pre>
-        <table className='styledTable'>
+        <table className='styled-table'>
           <thead>
             <tr>
               <th style={{ textAlign: 'center'}}>No.</th>
@@ -49,10 +49,10 @@ export default function Home({ getUserId }) {
                 <td>{ doc.email }</td>
                 <td>{ doc.contact }</td>
                 <td>
-                  <button onClick={(e) => getUserId(doc.id)}>
+                  <button  className='btn btn-edit' onClick={(e) => getUserId(doc.id)}>
                     Edit
                   </button>
-                  <button onClick={(e) => deleteHandler(doc.id)}>
+                  <button className='btn btn-delete' onClick={(e) => deleteHandler(doc.id)}>
                     Delete
                   </button>
                 </td>
