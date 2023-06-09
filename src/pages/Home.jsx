@@ -3,28 +3,27 @@ import { db } from '../firebase'
 import { Link } from 'react-router-dom'
 import './home.css'
 
+import UsersDataServices from '../services/users.services'
+
+
 export default function Home() {
 
-  const [data, setData] = useState({});
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-      // db.child("contacts").on("value", (snapshot) => {
-      //   if(snapshot.val() !== null) {
-      //     setData({ ...snapshot.val() })
-      //   } else {
-      //     setData({}); 
-      //   }
-      // })
-
-      return () => {
-        setData({});
-      };
+      getUsers (); 
   }, [])
 
+  const getUsers = async () => { 
+    const data = await UsersDataServices.getAllUsers(); 
+    console.log(data.docs);  
+    setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+  }
   
 
   return (
     <div style={{ marginTop: '100px'}}>
+      <pre>{ JSON.stringify(users, undefined, 2)}</pre>
         <table className='styledTable'>
           <thead>
             <tr>
@@ -36,13 +35,23 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(data).map((id, index) => {
-              <tr key={id}>
-                <th scope='row'>{'index + 1'}</th>
-                <td>{ 'data[id].name' }</td>
-                <td>{ 'data[id].email' }</td>
-                <td>{ 'data[id].contact' }</td>
+            {users.map((doc, index) => {
+              return (
+                <tr key={doc.id}>
+                <th scope='row'>{index + 1}</th>
+                <td>{ doc.name }</td>
+                <td>{ doc.email }</td>
+                <td>{ doc.contact }</td>
+                <td>
+                  <button variant='secondary' className='edit'>
+                    Edit
+                  </button>
+                  <button variant='danger' className='edit'>
+                    Delete
+                  </button>
+                </td>
               </tr>
+              )
             })}
           </tbody>
           
