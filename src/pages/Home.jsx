@@ -6,7 +6,7 @@ import './home.css'
 import UsersDataServices from '../services/users.services'
 
 
-export default function Home() {
+export default function Home({ getUserId }) {
 
   const [users, setUsers] = useState([]);
 
@@ -18,6 +18,12 @@ export default function Home() {
     const data = await UsersDataServices.getAllUsers(); 
     console.log(data.docs);  
     setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+  }
+  // console.log(users); 
+
+  const deleteHandler = async (id) => {
+    await UsersDataServices.deleteUser(id); 
+    getUsers(); 
   }
   
 
@@ -43,10 +49,10 @@ export default function Home() {
                 <td>{ doc.email }</td>
                 <td>{ doc.contact }</td>
                 <td>
-                  <button variant='secondary' className='edit'>
+                  <button onClick={(e) => getUserId(doc.id)}>
                     Edit
                   </button>
-                  <button variant='danger' className='edit'>
+                  <button onClick={(e) => deleteHandler(doc.id)}>
                     Delete
                   </button>
                 </td>
